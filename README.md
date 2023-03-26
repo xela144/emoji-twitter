@@ -1,4 +1,4 @@
-# Emoji-wtitter
+# Emoji-twitter
 
 Folling a tutorial to create a twitter clone! Using [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
