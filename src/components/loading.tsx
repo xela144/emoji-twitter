@@ -1,4 +1,3 @@
-// export const LoadingSpinner = ({ size }: { size: number }) => {
 export const LoadingSpinner = (spinnerProps: { size?: number }) => {
   return (
     <div role="status">
