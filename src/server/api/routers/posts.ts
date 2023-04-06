@@ -68,7 +68,11 @@ export const postsRouter = router({
   create: privateProcedure
     .input(
       z.object({
-        content: z.string().emoji().min(1).max(280),
+        content: z
+          .string()
+          .emoji("Only emojis allowed on emoji-twitter!")
+          .min(1)
+          .max(280),
       })
     )
     .mutation(async ({ ctx, input }) => {

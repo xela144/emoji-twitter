@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
 
-dayjs.extend(relativeTime);
+import { toast } from "react-hot-toast";
 
 import { type RouterOutputs, api } from "~/utils/api";
 import { LoadingPage } from "~/components/loading";
@@ -22,6 +22,15 @@ const CreatePostWizard = () => {
     onSuccess: () => {
       setInput("");
       void ctx.posts.getAll.invalidate();
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      console.log("error", e);
+      if (errorMessage && errorMessage[0]) {
+        toast(errorMessage[0]);
+      } else {
+        toast("Failed to load!");
+      }
     },
   });
 
