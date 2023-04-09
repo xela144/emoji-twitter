@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { PageLayout } from "~/components/layout";
 import { api } from "~/utils/api";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import superjson from "superjson";
@@ -14,14 +15,15 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
   if (!data || !data.username) {
     return <div>Something went wrong</div>;
   }
+  const title = `${data.username} -- Emoji Tweeter`;
   return (
     <>
       <Head>
-        <title>{data.username} -- Emoji Tweeter</title>
+        <title>{title}</title>
       </Head>
-      <main className="flex h-screen justify-center">
+      <PageLayout>
         <div>{`@${data.username}`}</div>
-      </main>
+      </PageLayout>
     </>
   );
 };
