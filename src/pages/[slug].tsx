@@ -7,9 +7,29 @@ import superjson from "superjson";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
 import { type GetStaticProps, type NextPage } from "next";
+import { LoadingPage } from "~/components/loading";
+import { PostView } from "~/components/postView";
+
+const ProfileFeed = (props: { userId: string }) => {
+  const { data, isLoading } = api.posts.getPostsByUserID.useQuery({
+    userId: props.userId,
+  });
+
+  if (isLoading) return <LoadingPage />;
+
+  if (!data || data.length === 0) return <div>User has not posted</div>;
+
+  return (
+    <div className="flex flex-col">
+      {data.map((fullPost) => (
+        <PostView {...fullPost} key={fullPost.post.id} />
+      ))}
+    </div>
+  );
+};
 
 const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
-  const { data, isLoading } = api.profile.getUser.useQuery({
+  const { data } = api.profile.getUser.useQuery({
     username,
   });
 
@@ -35,6 +55,7 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
         <div className="h-[64px]" />
         <div className="p-4 text-2xl font-bold">{`@${data.username}`}</div>
         <div className="w-full border-b border-slate-400" />
+        <ProfileFeed userId={data.id} />
       </PageLayout>
     </>
   );
