@@ -80,3 +80,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths = () => {
   return { paths: [], fallback: "blocking" };
 };
+
+export default ProfilePage;

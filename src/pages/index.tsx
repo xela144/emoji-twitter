@@ -16,6 +16,7 @@ const CreatePostWizard = () => {
   const ctx = api.useContext();
 
   const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
+    // FIXME: Use react-hook-form
     onSuccess: () => {
       setInput("");
       void ctx.posts.getAll.invalidate();
