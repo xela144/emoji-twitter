@@ -1,15 +1,23 @@
-import { type NextPage } from "next";
 import Head from "next/head";
 import { PageLayout } from "~/components/layout";
+import { generateSSGHelper } from "~/server/helpers/generateSSGHelper";
+import { PostView } from "~/components/postView";
+import { api } from "~/utils/api";
+import type { GetStaticProps, NextPage } from "next";
 
-const SinglePostPage: NextPage = () => {
+const SinglePostPage: NextPage<{ id: string }> = ({ id }) => {
+  const { data } = api.posts.getSingle.useQuery({
+    id,
+  });
+  if (!data) return <div>404</div>;
+
   return (
     <>
       <Head>
-        <title>Post</title>
+        <title>{`Post - @${data.author.username}`}</title>
       </Head>
       <PageLayout>
-        <div>Single Post view</div>
+        <PostView {...data} />
       </PageLayout>
     </>
   );
